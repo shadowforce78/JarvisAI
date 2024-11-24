@@ -19,7 +19,7 @@ def listen():
 
 while True:
     command = listen()
-    if "quitter" or "au revoir" in command:
+    if "quitter" in command or "au revoir" in command:
         talk("Bye bye !")
         break
     elif "heure" in command:
