@@ -19,7 +19,7 @@ def get_coordinates(city, api_key):
 def get_weather(lat, lon, api_key):
     """Obtenir la météo via OneCall API."""
     # Teste avec OneCall 2.5 si 3.0 ne fonctionne pas
-    weather_url = f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&appid={api_key}&units=metric&lang=fr"
+    weather_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric&lang=fr"
     response = requests.get(weather_url)
     response.raise_for_status()
     data = response.json()
