@@ -16,7 +16,7 @@ def get_coordinates(city, api_key):
         raise ValueError(f"Erreur : Impossible de trouver les coordonnées pour la ville '{city}'.")
     return data[0]["lat"], data[0]["lon"]
 
-def get_weather(lat, lon, api_key):
+def get_weather(lat, lon, api_key, city):
     """Obtenir la météo via OneCall API."""
     # Teste avec OneCall 2.5 si 3.0 ne fonctionne pas
     weather_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric&lang=fr"
@@ -25,26 +25,29 @@ def get_weather(lat, lon, api_key):
     data = response.json()
 
     # Extraire les données principales
-    current_temp = data["current"]["temp"]
-    description = data["current"]["weather"][0]["description"]
-    print(f"Actuellement, il fait {current_temp}°C avec {description}.")
+    current_temp = data["main"]["temp"]
+    current_temp = round(current_temp)
+    description = data["weather"][0]["description"]
+    toreturn = (f"Actuellement, il fait {current_temp}°C avec {description} à {city}.")
+    return toreturn
 
-def main():
-    api_key = os.getenv("WEATHERAPI")
-    if not api_key:
-        print("Erreur : Clé API introuvable.")
-        return
+# For testing purposes only
+# def main():
+#     api_key = os.getenv("WEATHERAPI")
+#     if not api_key:
+#         print("Erreur : Clé API introuvable.")
+#         return
 
-    try:
-        city = input("Entrez le nom de la ville : ")
-        lat, lon = get_coordinates(city, api_key)
-        get_weather(lat, lon, api_key)
-    except ValueError as ve:
-        print(ve)
-    except requests.exceptions.HTTPError as e:
-        print(f"Erreur API : {e}")
-    except Exception as e:
-        print(f"Erreur inattendue : {e}")
-
-if __name__ == "__main__":
-    main()
+#     try:
+#         city = input("Entrez le nom de la ville : ")
+#         lat, lon = get_coordinates(city, api_key)
+#         get_weather(lat, lon, api_key, city)
+#     except ValueError as ve:
+#         print(ve)
+#     except requests.exceptions.HTTPError as e:
+#         print(f"Erreur API : {e}")
+#     except Exception as e:
+#         print(f"Erreur inattendue : {e}")
+        
+# if __name__ == "__main__":
+#     main()

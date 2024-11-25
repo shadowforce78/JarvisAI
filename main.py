@@ -1,5 +1,8 @@
 import speech_recognition as sr
 import pyttsx3
+from weatherAPI import get_weather, get_coordinates
+import os
+import requests
 
 def talk(text):
     engine = pyttsx3.init()
@@ -26,5 +29,27 @@ while True:
         from datetime import datetime
         now = datetime.now().strftime("%H:%M")
         talk(f"Il est {now}")
+    elif "météo" in command:
+        api_key = os.getenv("WEATHERAPI")
+        if not api_key:
+            talk("Erreur : Clé API introuvable.")
+            continue
+
+        try:
+            words = command.split()
+            if "météo" in words:
+                city_index = words.index("météo") + 2
+                city = " ".join(words[city_index:])
+            if not city:
+                talk("Je n'ai pas compris le nom de la ville.")
+                continue
+            lat, lon = get_coordinates(city, api_key)
+            talk(get_weather(lat, lon, api_key, city))
+        except ValueError as ve:
+            talk(ve)
+        except requests.exceptions.HTTPError as e:
+            talk(f"Erreur API : {e}")
+        except Exception as e:
+            talk(f"Erreur inattendue : {e}")
     else:
         talk("Je ne sais pas encore faire ça.")
