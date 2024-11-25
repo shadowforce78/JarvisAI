@@ -1,0 +1,11 @@
+certifi==2024.8.30
+charset-normalizer==3.4.0
+comtypes==1.4.8
+idna==3.10
+pypiwin32==223
+pyttsx3==2.98
+pywin32==308
+requests==2.32.3
+SpeechRecognition==3.11.0
+typing_extensions==4.12.2
+urllib3==2.2.3
