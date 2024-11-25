@@ -3,6 +3,7 @@ charset-normalizer==3.4.0
 comtypes==1.4.8
 idna==3.10
 pypiwin32==223
+python-dotenv==1.0.1
 pyttsx3==2.98
 pywin32==308
 requests==2.32.3
